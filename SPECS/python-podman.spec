@@ -1,6 +1,6 @@
 Name: python-podman
-Version: 4.4.1
-Release: 1%{?dist}
+Version: 4.6.0
+Release: 2%{?dist}
 Summary: RESTful API for Podman
 License: ASL 2.0
 URL: https://github.com/containers/podman-py
@@ -45,13 +45,25 @@ Summary: %{summary}
 %{python3_sitelib}/podman-*/*
 
 %changelog
-* Mon Feb 27 2023 Jindrich Novy <jnovy@redhat.com> - 4.4.1-1
-- update to https://github.com/containers/podman-py/releases/tag/v4.4.1
-- Related: #2123641
+* Mon Dec 11 2023 Lokesh Mandvekar <lsm5@redhat.com> - 4.6.0-2
+- Rebuild with updated python-urllib3 for CVE-2203-43804
+- Related: Jira:RHEL-11987
 
-* Wed Feb 15 2023 Jindrich Novy <jnovy@redhat.com> - 4.4.0-1
-- update to python-podman-4.4.0
-- Related: #2123641
+* Thu Jul 27 2023 Jindrich Novy <jnovy@redhat.com> - 4.6.0-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.6.0
+- Related: #2176055
+
+* Tue Jun 06 2023 Jindrich Novy <jnovy@redhat.com> - 4.5.1-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.5.1
+- Related: #2176055
+
+* Thu May 11 2023 Jindrich Novy <jnovy@redhat.com> - 4.5.0-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.5.0
+- Related: #2176055
+
+* Thu Mar 09 2023 Jindrich Novy <jnovy@redhat.com> - 4.4.1-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.4.1
+- Related: #2176055
 
 * Mon Nov 07 2022 Jindrich Novy <jnovy@redhat.com> - 4.3.0-2
 - upload new source tarball
