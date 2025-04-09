@@ -1,10 +1,19 @@
+%global import_path github.com/containers/podman-py
+%global branch release-4.9
+%global commit0 07e1b45ca48db63ae4a3106ee630d120bdd89866
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
 Name: python-podman
-Version: 4.6.0
-Release: 2%{?dist}
+Version: 4.9.0
+Release: 3%{?dist}
 Summary: RESTful API for Podman
 License: ASL 2.0
 URL: https://github.com/containers/podman-py
-Source0: https://github.com/containers/podman-py/archive/refs/tags/v%{version}.tar.gz
+%if 0%{?branch:1}
+Source0: https://%{import_path}/tarball/%{commit0}/%{branch}-%{shortcommit0}.tar.gz
+%else
+Source0: https://%{import_path}/archive/%{commit0}/%{name}-%{version}-%{shortcommit0}.tar.gz
+%endif
 BuildArch: noarch
 
 %description
@@ -22,6 +31,7 @@ BuildRequires: python%{python3_pkgversion}-sphinx
 Requires: python%{python3_pkgversion}-pytoml
 Requires: python%{python3_pkgversion}-pyxdg
 Requires: python%{python3_pkgversion}-requests
+Requires: python%{python3_pkgversion}-urllib3
 Provides: podman-py = %{version}-%{release}
 Summary: %{summary}
 %{?python_provide:%python_provide python%{python3_pkgversion}-podman}
@@ -30,7 +40,11 @@ Summary: %{summary}
 %{name} is a library of bindings to use the RESTful API for Podman.
 
 %prep
-%autosetup -Sgit_am -n podman-py-%{version}
+%if 0%{?branch:1}
+%autosetup -Sgit -n containers-podman-py-%{shortcommit0}
+%else
+%autosetup -Sgit -n podman-py-%{commit0}
+%endif
 
 %build
 %py3_build
@@ -45,9 +59,29 @@ Summary: %{summary}
 %{python3_sitelib}/podman-*/*
 
 %changelog
-* Mon Dec 11 2023 Lokesh Mandvekar <lsm5@redhat.com> - 4.6.0-2
-- Rebuild with updated python-urllib3 for CVE-2203-43804
-- Related: Jira:RHEL-11987
+* Tue Oct 29 2024 Jindrich Novy <jnovy@redhat.com> - 4.9.0-3
+- sync with release-4.9 branch
+- Resolves: RHEL-31069
+
+* Tue Jul 09 2024 Jindrich Novy <jnovy@redhat.com> - 4.9.0-2
+- depend directly on urllib3
+- Resolves: RHEL-43567
+
+* Tue Jan 23 2024 Jindrich Novy <jnovy@redhat.com> - 4.9.0-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.9.0
+- Related: Jira:RHEL-2110
+
+* Fri Jan 05 2024 Jindrich Novy <jnovy@redhat.com> - 4.8.2-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.8.2
+- Related: Jira:RHEL-2110
+
+* Thu Dec 07 2023 Lokesh Mandvekar <lsm5@redhat.com> - 4.8.0.post1-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.8.0.post1
+- Related: Jira:RHEL-2110
+
+* Fri Sep 29 2023 Jindrich Novy <jnovy@redhat.com> - 4.7.0-1
+- update to https://github.com/containers/podman-py/releases/tag/v4.7.0
+- Related: Jira:RHEL-2110
 
 * Thu Jul 27 2023 Jindrich Novy <jnovy@redhat.com> - 4.6.0-1
 - update to https://github.com/containers/podman-py/releases/tag/v4.6.0
